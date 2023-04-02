@@ -197,6 +197,21 @@ class Toplevel2:
 
 
 class Toplevel5:
+    def deleteEvent(self):
+          selection=self.Listbox1.curselection()
+          try:
+            if len(selection)==0:
+                tkMessageBox.showinfo("Error","Please select an event")
+            else:
+                index=selection[0]
+                event_row=self.Listbox1.get(index)
+                event_id=str(event_row[0])
+                dbs_support.cursor.execute("DELETE FROM event WHERE id= '"+event_id+"' ")
+                dbs_support.connc.commit()
+                self.showDetails()
+                tkMessageBox.showinfo("Success","Event deleted successfully")
+          except Exception as e:
+                tkMessageBox.showinfo("Error",e)
     def showDetails(self):
         self.Listbox1.delete(0,END)
         try:
@@ -221,6 +236,7 @@ class Toplevel5:
               self.showDetails()
         except Exception as e:
               tkMessageBox.showerror("Error",e)
+            
     
           
         
@@ -398,7 +414,7 @@ class Toplevel5:
         self.Button8.configure(highlightbackground="#d9d9d9")
         self.Button8.configure(highlightcolor="black")
         self.Button8.configure(pady="0")
-        self.Button8.configure(text='''Delete''')
+        self.Button8.configure(command=self.deleteEvent,text='''Delete''')
         self.Button9 = tk.Button(self.top)
         self.Button9.place(relx=0.917, rely=0.933, height=24, width=47)
         self.Button9.configure(activebackground="beige")
@@ -434,14 +450,29 @@ class Toplevel5_1:
         except Exception as e:
                 tkMessageBox.showinfo("Error",e)
 
+    def deleteSponsor(self):
+          selection=self.Listbox3.curselection()
+          try:
+            if len(selection)==0:
+                tkMessageBox.showinfo("Error","Please select a sponsor")
+            else:
+                index=selection[0]
+                sponsor_row=self.Listbox3.get(index)
+                sponsor_id=str(sponsor_row[0])
+                dbs_support.cursor.execute("DELETE FROM sponsors WHERE id= '"+sponsor_id+"' ")
+                dbs_support.connc.commit()
+                self.showDetails()
+                tkMessageBox.showinfo("Success","Sponsor deleted successfully")
+          except Exception as e:
+                tkMessageBox.showinfo("Error",e)
+
+
     def addSponsor(self):
         sponsor_name=self.Text1_1.get('1.0','end-1c');
         amount_given=(self.Text2_2.get('1.0','end-1c'));
         event_name=self.Text2_1_1.get('1.0','end-1c');
         
         try:
-              
-            
             dbs_support.cursor.callproc('add_sponsor', (sponsor_name, amount_given, event_name))
             dbs_support.connc.commit()
             self.showDetails()
@@ -577,7 +608,7 @@ class Toplevel5_1:
         self.Button8_1.configure(highlightbackground="#d9d9d9")
         self.Button8_1.configure(highlightcolor="black")
         self.Button8_1.configure(pady="0")
-        self.Button8_1.configure(text='''Delete''')
+        self.Button8_1.configure(command=self.deleteSponsor,text='''Delete''')
         self.Button9_1 = tk.Button(self.top)
         self.Button9_1.place(relx=0.917, rely=0.933, height=24, width=47)
         self.Button9_1.configure(activebackground="beige")
@@ -612,6 +643,23 @@ class Toplevel5_2:
    
         except Exception as e:
                 tkMessageBox.showinfo("Error",e)
+    
+    def deleteVendors(self):
+          selection=self.Listbox4.curselection()
+          try:
+            if len(selection)==0:
+                tkMessageBox.showinfo("Error","Please select a vendor")                                                                                    
+            else:
+                index=selection[0]
+                vendor_row=self.Listbox4.get(index)
+                vendor_id=str(vendor_row[0])
+                dbs_support.cursor.execute("DELETE FROM vendors WHERE id= '"+vendor_id+"' ")
+                dbs_support.connc.commit()
+                self.showDetails()
+                tkMessageBox.showinfo("Success","Vendor deleted successfully")
+          except Exception as e:
+                tkMessageBox.showinfo("Error",e)
+
     def addVendor(self):
         name=self.Text2_3.get('1.0','end-1c');
         phone=self.Text2_1_2.get('1.0','end-1c');
@@ -781,7 +829,7 @@ class Toplevel5_2:
         self.Button8_2.configure(highlightbackground="#d9d9d9")
         self.Button8_2.configure(highlightcolor="black")
         self.Button8_2.configure(pady="0")
-        self.Button8_2.configure(text='''Delete''')
+        self.Button8_2.configure(command=self.deleteVendors,text='''Delete''')
         self.Button9_2 = tk.Button(self.top)
         self.Button9_2.place(relx=0.917, rely=0.933, height=24, width=47)
         self.Button9_2.configure(activebackground="beige")
@@ -829,6 +877,22 @@ class Toplevel5_3:
             self.showDetails()
         except Exception as e:
               tkMessageBox.showerror("Error",e)
+
+    def deletePerformer(self):
+          selection=self.Listbox5.curselection()
+          try:
+            if len(selection)==0:
+                tkMessageBox.showinfo("Error","Please select a performer")                                                                                    
+            else:
+                index=selection[0]
+                performer_row=self.Listbox5.get(index)
+                performer_id=str(performer_row[0])
+                dbs_support.cursor.execute("DELETE FROM performers WHERE id= '"+performer_id+"' ")
+                dbs_support.connc.commit()
+                self.showDetails()
+                tkMessageBox.showinfo("Success","Performer deleted successfully")
+          except Exception as e:
+                tkMessageBox.showinfo("Error",e)
 
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -1008,7 +1072,7 @@ class Toplevel5_3:
         self.Button8_3.configure(highlightbackground="#d9d9d9")
         self.Button8_3.configure(highlightcolor="black")
         self.Button8_3.configure(pady="0")
-        self.Button8_3.configure(text='''Delete''')
+        self.Button8_3.configure(command=self.deletePerformer,text='''Delete''')
         self.Button9_3 = tk.Button(self.top)
         self.Button9_3.place(relx=0.917, rely=0.933, height=24, width=47)
         self.Button9_3.configure(activebackground="beige")
