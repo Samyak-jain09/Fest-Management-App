@@ -433,6 +433,22 @@ class Toplevel5_1:
    
         except Exception as e:
                 tkMessageBox.showinfo("Error",e)
+
+    def addSponsor(self):
+        sponsor_name=self.Text1_1.get('1.0','end-1c');
+        amount_given=(self.Text2_2.get('1.0','end-1c'));
+        event_name=self.Text2_1_1.get('1.0','end-1c');
+        
+        try:
+              
+            #   insQuery="IF NOT EXISTS (SELECT * FROM sponsors WHERE name='"+sponsor_name+"') THEN INSERT INTO sponsors (name, contributed_amount) VALUES ( '" + sponsor_name + "' , '" + amount_given + "' ); END IF; IF EXISTS (SELECT id FROM sponsors WHERE name='"+sponsor_name+"') THEN INSERT INTO sponsoring (sponsors_id, event_id) VALUES ((SELECT id FROM sponsors WHERE name='"+sponsor_name+"'), (SELECT id FROM event WHERE name='" + event_name + "')); END IF;"
+            #   dbs_support.cursor.execute(insQuery)
+            #   dbs_support.connc.commit()
+            dbs_support.cursor.callproc('add_sponsor', (sponsor_name, amount_given, event_name))
+            self.showDetails()
+        except Exception as e:
+              tkMessageBox.showerror("Error",e)
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -550,7 +566,7 @@ class Toplevel5_1:
         self.Button7_1.configure(highlightbackground="#d9d9d9")
         self.Button7_1.configure(highlightcolor="black")
         self.Button7_1.configure(pady="0")
-        self.Button7_1.configure(text='''Add''')
+        self.Button7_1.configure(command=self.addSponsor,text='''Add''')
         self.Button8_1 = tk.Button(self.top)
         self.Button8_1.place(relx=0.383, rely=0.489, height=24, width=47)
         self.Button8_1.configure(activebackground="beige")
@@ -597,6 +613,21 @@ class Toplevel5_2:
    
         except Exception as e:
                 tkMessageBox.showinfo("Error",e)
+    def addVendor(self):
+        name=self.Text2_3.get('1.0','end-1c');
+        phone=self.Text2_1_2.get('1.0','end-1c');
+        location=self.Text3_1.get('1.0','end-1c');
+        product=self.Text4_1.get('1.0','end-1c');
+        
+        try:
+              insQuery="insert into vendors(name,phone_no,booth_location,product_name) values('" + name + "','" + phone + "','" + location + "','" + product + "')"
+              dbs_support.cursor.execute(insQuery)
+              dbs_support.connc.commit()
+              self.showDetails()
+        except Exception as e:
+              tkMessageBox.showerror("Error",e)
+
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -739,7 +770,7 @@ class Toplevel5_2:
         self.Button7_2.configure(highlightbackground="#d9d9d9")
         self.Button7_2.configure(highlightcolor="black")
         self.Button7_2.configure(pady="0")
-        self.Button7_2.configure(text='''Add''')
+        self.Button7_2.configure(command=self.addVendor,text='''Add''')
         self.Button8_2 = tk.Button(self.top)
         self.Button8_2.place(relx=0.383, rely=0.489, height=24, width=47)
         self.Button8_2.configure(activebackground="beige")
