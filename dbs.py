@@ -441,10 +441,9 @@ class Toplevel5_1:
         
         try:
               
-            #   insQuery="IF NOT EXISTS (SELECT * FROM sponsors WHERE name='"+sponsor_name+"') THEN INSERT INTO sponsors (name, contributed_amount) VALUES ( '" + sponsor_name + "' , '" + amount_given + "' ); END IF; IF EXISTS (SELECT id FROM sponsors WHERE name='"+sponsor_name+"') THEN INSERT INTO sponsoring (sponsors_id, event_id) VALUES ((SELECT id FROM sponsors WHERE name='"+sponsor_name+"'), (SELECT id FROM event WHERE name='" + event_name + "')); END IF;"
-            #   dbs_support.cursor.execute(insQuery)
-            #   dbs_support.connc.commit()
+            
             dbs_support.cursor.callproc('add_sponsor', (sponsor_name, amount_given, event_name))
+            dbs_support.connc.commit()
             self.showDetails()
         except Exception as e:
               tkMessageBox.showerror("Error",e)
@@ -816,7 +815,21 @@ class Toplevel5_3:
                         self.Listbox5.insert(END,row)
    
         except Exception as e:
-                tkMessageBox.showinfo("Error",e) 
+                tkMessageBox.showinfo("Error",e)
+    def addPerformer(self):
+        performer_name=self.Text1_2.get('1.0','end-1c');
+        time=(self.Text2_4.get('1.0','end-1c'));
+        date=self.Text2_1_3.get('1.0','end-1c');
+        genre=self.Text3_2.get('1.0','end-1c');
+        event_name=self.Text4_2.get('1.0','end-1c');
+        
+        try:          
+            dbs_support.cursor.callproc('add_performers', (performer_name, genre,time,date,event_name))
+            dbs_support.connc.commit()
+            self.showDetails()
+        except Exception as e:
+              tkMessageBox.showerror("Error",e)
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -983,7 +996,7 @@ class Toplevel5_3:
         self.Button7_3.configure(highlightbackground="#d9d9d9")
         self.Button7_3.configure(highlightcolor="black")
         self.Button7_3.configure(pady="0")
-        self.Button7_3.configure(text='''Add''')
+        self.Button7_3.configure(command=self.addPerformer,text='''Add''')
         self.Button8_3 = tk.Button(self.top)
         self.Button8_3.place(relx=0.383, rely=0.489, height=24, width=47)
         self.Button8_3.configure(activebackground="beige")
@@ -1173,6 +1186,19 @@ class Toplevel3:
 
 
 class Toplevel5_4:
+    def bookTicket(self):
+        user_name=self.Text1_3.get('1.0','end-1c');
+        user_email=(self.Text2_5.get('1.0','end-1c'));
+        event_name=self.Text2_1_4.get('1.0','end-1c');
+        
+        try:          
+            dbs_support.cursor.callproc('add_user', (user_name, user_email,event_name))
+            dbs_support.connc.commit()
+            tkMessageBox.showinfo("Success","Ticket Booked Successfully")
+            
+        except Exception as e:
+              tkMessageBox.showerror("Error",e)
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -1279,7 +1305,7 @@ class Toplevel5_4:
         self.Button7_4.configure(highlightbackground="#d9d9d9")
         self.Button7_4.configure(highlightcolor="black")
         self.Button7_4.configure(pady="0")
-        self.Button7_4.configure(text='''Book Ticket''')
+        self.Button7_4.configure(command=self.bookTicket,text='''Book Ticket''')
         self.Button9_4 = tk.Button(self.top)
         self.Button9_4.place(relx=0.5, rely=0.689, height=64, width=167)
         self.Button9_4.configure(activebackground="beige")
