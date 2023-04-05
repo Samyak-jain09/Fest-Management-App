@@ -217,7 +217,7 @@ class Toplevel5:
         try:
                 dbs_support.cursor.execute("SELECT * FROM event")
                 dbsresponse = dbs_support.cursor.fetchall()
-                self.Listbox1.insert(END,"ID Name Date Time Venue Tickets_left")
+                self.Listbox1.insert(END,"ID Name Date Time Venue Tickets_left Tickets_sold")
                 for row in dbsresponse:
                         self.Listbox1.insert(END,row)
    
@@ -1112,7 +1112,7 @@ class Toplevel3:
         try:
                 dbs_support.cursor.execute("SELECT * FROM event")
                 dbsresponse = dbs_support.cursor.fetchall()
-                self.Listbox2.insert(END,"ID Name Date Time Venue Tickets_left")
+                self.Listbox2.insert(END,"ID Name Date Time Venue Tickets_left Tickets_sold")
                 for row in dbsresponse:
                         self.Listbox2.insert(END,row)
    

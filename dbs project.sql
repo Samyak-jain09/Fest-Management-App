@@ -53,6 +53,7 @@ CREATE TABLE `event` (
   `time` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
   `tickets_left` int NOT NULL,
+  `tickets_sold`int DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -111,6 +112,7 @@ BEGIN
       BEGIN
          INSERT INTO attending (user_id, event_id) VALUES ((SELECT id FROM user WHERE name=user_name), (SELECT id FROM event WHERE name=event_name));
          UPDATE event SET tickets_left = tickets_left - 1 where name=event_name;
+         UPDATE event SET tickets_sold= tickets_sold+1 where name=event_name;
       END;
    END IF;
 END;
