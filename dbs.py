@@ -217,7 +217,7 @@ class Toplevel5:
         try:
                 dbs_support.cursor.execute("SELECT * FROM event")
                 dbsresponse = dbs_support.cursor.fetchall()
-                self.Listbox1.insert(END,"ID Name Date Time Venue Tickets_left Tickets_sold")
+                self.Listbox1.insert(END,"ID  Name  Date  Time  Venue  Tickets_left  Ticket_Price  Tickets_sold ")
                 for row in dbsresponse:
                         self.Listbox1.insert(END,row)
    
@@ -229,8 +229,9 @@ class Toplevel5:
         date=self.Text2_1.get('1.0','end-1c');
         location=self.Text3.get('1.0','end-1c');
         tickets=self.Text4.get('1.0','end-1c');
+        price=self.Text5.get('1.0','end-1c');
         try:
-              insQuery="insert into event(name,date,time,location,tickets_left) values('" + name + "','" + date + "','" + time + "','" + location + "','" + tickets + "')"
+              insQuery="insert into event(name,date,time,location,tickets_left,ticket_price) values('" + name + "','" + date + "','" + time + "','" + location + "','" + tickets + "' ,'" + price + "' )"
               dbs_support.cursor.execute(insQuery)
               dbs_support.connc.commit()
               self.showDetails()
@@ -319,6 +320,21 @@ class Toplevel5:
         self.tickets.configure(highlightbackground="#d9d9d9")
         self.tickets.configure(highlightcolor="black")
         self.tickets.configure(text='''Tickets Left''')
+        
+        self.price = tk.Label(self.Frame1)
+        self.price.place(relx=0.019, rely=0.860, height=26, width=74)
+        self.price.configure(activebackground="#f9f9f9")
+        self.price.configure(anchor='w')
+        self.price.configure(background="#d9d9d9")
+        self.price.configure(compound='left')
+        self.price.configure(disabledforeground="#a3a3a3")
+        self.price.configure(foreground="#000000")
+        self.price.configure(highlightbackground="#d9d9d9")
+        self.price.configure(highlightcolor="black")
+        self.price.configure(text='''Ticket Price''')
+
+
+
         self.Text1 = tk.Text(self.Frame1)
         self.Text1.place(relx=0.171, rely=0.054,
                          relheight=0.13, relwidth=0.674)
@@ -379,6 +395,21 @@ class Toplevel5:
         self.Text4.configure(selectbackground="#c4c4c4")
         self.Text4.configure(selectforeground="black")
         self.Text4.configure(wrap="word")
+
+        self.Text5 = tk.Text(self.Frame1)
+        self.Text5.place(relx=0.171, rely=0.860,
+                         relheight=0.13, relwidth=0.674)
+        self.Text5.configure(background="white")
+        self.Text5.configure(font="TkTextFont")
+        self.Text5.configure(foreground="black")
+        self.Text5.configure(highlightbackground="#d9d9d9")
+        self.Text5.configure(highlightcolor="black")
+        self.Text5.configure(insertbackground="black")
+        self.Text5.configure(selectbackground="#c4c4c4")
+        self.Text5.configure(selectforeground="black")
+        self.Text5.configure(wrap="word")
+
+
         self.Button5 = tk.Button(self.top)
         self.Button5.place(relx=0.033, rely=0.489, height=24, width=47)
         self.Button5.configure(activebackground="beige")
@@ -1112,7 +1143,7 @@ class Toplevel3:
         try:
                 dbs_support.cursor.execute("SELECT * FROM event")
                 dbsresponse = dbs_support.cursor.fetchall()
-                self.Listbox2.insert(END,"ID Name Date Time Venue Tickets_left Tickets_sold")
+                self.Listbox2.insert(END,"ID  Name  Date  Time  Venue  Tickets_left  Ticket_Price  Tickets_sold ")
                 for row in dbsresponse:
                         self.Listbox2.insert(END,row)
    

@@ -53,6 +53,7 @@ CREATE TABLE `event` (
   `time` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
   `tickets_left` int NOT NULL,
+  `ticket_price` int NOT NULL,
   `tickets_sold`int DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
@@ -91,8 +92,8 @@ CREATE TABLE `sponsoring` (
   CONSTRAINT `sponsoring_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
- insert into event(name,date,time,location,tickets_left) values ('n2o','2023-04-01', '20:00:00','audi',2);
- insert into event(name,date,time,location,tickets_left) values ('amit trivedi','2023-04-02','20:00:00','south park',2);
+ insert into event(name,date,time,location,tickets_left,ticket_price) values ('n2o','2023-04-01', '20:00:00','audi',2,1000);
+ insert into event(name,date,time,location,tickets_left,ticket_price) values ('amit trivedi','2023-04-02','20:00:00','south park',2,900);
 select * from event;
 
 
